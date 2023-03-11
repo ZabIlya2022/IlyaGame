@@ -18,9 +18,9 @@ class Player(pygame.sprite.Sprite):
         if keystate[pygame.K_RIGHT]:
             self.rect.x += 8
         if keystate[pygame.K_UP]:
-            self.rect.y = 100
+            self.rect.y -= 8
         if keystate[pygame.K_DOWN]:
-            self.rect.y += 0
+            self.rect.y += 8
 
         if self.rect.right > Constants.WIDTH:
             self.rect.right = Constants.WIDTH
@@ -29,15 +29,28 @@ class Player(pygame.sprite.Sprite):
 
         if self.rect.bottom > Constants.HEIGHT:
             self.rect.bottom = Constants.HEIGHT
-        else:
-            self.rect.y += 4
-        self.speedy = 0
-        self.isOnJump
-        self.jumpHeight
+        if self.rect.top < 0:
+            self.rect.top = 0
+        self.isonjump = False
+        self.jumpheight = 400
 
-    def update(self):
+    def updat(self):
         keystate = pygame.key.get_pressed()
-        if keystate[pygame.K_UP] and not self.isOnJump and self.rect.bottom >= Constants.HEIGHT:
-            self.isOmJump = True
+        if keystate[pygame.K_UP] and not self.isonjump and self.rect.bottom >= Constants.HEIGHT:
+            self.isonjump = True
 
-            if self.isonjump and self.jumpHeight <= self.rect.y:
+        if self.isonjump and self.jumpheight <= self.rect.y:
+            self.rect.y -= 5
+            return
+        else:
+            self.isonjump = False
+
+        if self.rect.bottom <= Constants.HEIGHT and not self.isonjump:
+            self.rect.y += self.speedy
+            self.speedy +=2
+        else:
+            self.speedy = 0
+            self.rect.bottom = Constants.HEIGHT
+
+all_sprites = pygame.sprite.Group()
+player = Player()
