@@ -10,47 +10,32 @@ class Player(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.centerx = Constants.WIDTH / 2
         self.rect.bottom = Constants.HEIGHT - 10
+        #Собственное:
+        self.speedy = 0
+        self.isOnJump = False
+        self.jumpHeight = 200#высота прыжка. Придумать, как инвертировать. 
+        #т.е. сделать так, чтоб больше высота - выше прыжок, а не наоборот, как сейчас
 
     def update(self):
         keystate = pygame.key.get_pressed()
-        if keystate[pygame.K_LEFT]:
-            self.rect.x -= 8
-        if keystate[pygame.K_RIGHT]:
-            self.rect.x += 8
-        if keystate[pygame.K_UP]:
-            self.rect.y -= 8
-        if keystate[pygame.K_DOWN]:
-            self.rect.y += 8
 
-        if self.rect.right > Constants.WIDTH:
-            self.rect.right = Constants.WIDTH
-        if self.rect.left < 0:
-            self.rect.left = 0
+        #Сделать движение влево-вправо
+        #Сделать прыжок более реалистичным(настроить скорость подьема и падения)
+        #Добавить папку resources и положить туда внешний вид спрайта
+    
 
-        if self.rect.bottom > Constants.HEIGHT:
-            self.rect.bottom = Constants.HEIGHT
-        if self.rect.top < 0:
-            self.rect.top = 0
-        self.isonjump = False
-        self.jumpheight = 400
+        if keystate[pygame.K_UP] and not self.isOnJump and self.rect.bottom >= Constants.HEIGHT:
+            self.isOnJump = True
 
-    def updat(self):
-        keystate = pygame.key.get_pressed()
-        if keystate[pygame.K_UP] and not self.isonjump and self.rect.bottom >= Constants.HEIGHT:
-            self.isonjump = True
-
-        if self.isonjump and self.jumpheight <= self.rect.y:
-            self.rect.y -= 5
+        if self.isOnJump and self.jumpHeight <= self.rect.y:
+            self.rect.y -= 50#скорость прыжка вверх
             return
         else:
-            self.isonjump = False
+            self.isOnJump = False
 
-        if self.rect.bottom <= Constants.HEIGHT and not self.isonjump:
-            self.rect.y += self.speedy
-            self.speedy +=2
+        if self.rect.bottom <= Constants.HEIGHT and not self.isOnJump:
+            self.rect.y += self.speedy#Скорость падения
+            self.speedy += 0.01#Скорсоть падения постоянно увеличивается
         else:
             self.speedy = 0
             self.rect.bottom = Constants.HEIGHT
-
-all_sprites = pygame.sprite.Group()
-player = Player()
