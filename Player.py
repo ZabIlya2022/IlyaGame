@@ -13,7 +13,7 @@ class Player(pygame.sprite.Sprite):
         #Собственное:
         self.speedy = 0
         self.isOnJump = False
-        self.jumpHeight = 200#высота прыжка. Придумать, как инвертировать. 
+        self.jumpHeight = 200 #высота прыжка. Придумать, как инвертировать. 234
         #т.е. сделать так, чтоб больше высота - выше прыжок, а не наоборот, как сейчас
 
     def update(self):
