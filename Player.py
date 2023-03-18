@@ -1,15 +1,16 @@
+import os
 import pygame
 from Colours import Colours
 from Constants import Constants
+from Utils import Utils
 
 class Player(pygame.sprite.Sprite):
     def __init__(self):
-        pygame.sprite.Sprite.__init__(self)
-        self.image = pygame.Surface((50, 40))
-        self.image.fill(Colours.GREEN)
+        pygame.sprite.Sprite.__init__(self)        
+        self.image = Utils.LoadImage("js.png", 100, 500)
         self.rect = self.image.get_rect()
-        self.rect.centerx = Constants.WIDTH / 2
-        self.rect.bottom = Constants.HEIGHT - 10
+        self.rect.center = (Constants.WIDTH / 2, Constants.HEIGHT / 2)
+
         #Собственное:
         self.speedy = 0
         self.isOnJump = False

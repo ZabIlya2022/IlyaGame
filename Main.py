@@ -1,5 +1,6 @@
 # Игра Shmup - 1 часть
 # Cпрайт игрока и управление
+import os
 import pygame
 import random
 from Constants import Constants
@@ -13,9 +14,6 @@ pygame.mixer.init()
 screen = pygame.display.set_mode((Constants.WIDTH, Constants.HEIGHT))
 pygame.display.set_caption("Shmup!")
 clock = pygame.time.Clock()
-
-
-
 all_sprites = pygame.sprite.Group()
 player = Player()
 all_sprites.add(player)
