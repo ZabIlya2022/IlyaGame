@@ -1,60 +1,48 @@
 import os
 import pygame
+from Sprites.GravitySprite import GravitySprite
 from Colours import Colours
 from Constants import Constants
 from Utils import Utils
 
-class Player(pygame.sprite.Sprite):
+class Player(GravitySprite):
     def __init__(self):
-        pygame.sprite.Sprite.__init__(self)        
+        GravitySprite.__init__(self)       
         self.image = Utils.LoadImage("js.png", 100, 100)
         self.rect = self.image.get_rect()
         self.rect.center = (Constants.WIDTH / 2, Constants.HEIGHT / 2)
 
         #Собственное:
-        self.speedy = 0
-        self.isOnJump = False
-        self.jumpHeight = 200 #высота прыжка. Придумать, как инвертировать. 654
-        #т.е. сделать так, чтоб больше высота - выше прыжок, а не наоборот, как сейчас
+        self.jumpHeight = 200
 
     def update(self):
+        Utils.ApplyGravity(self)
+
+        if self.jumpHeight >= self.rect.y and self.isMovingUp:
+            self.isMovingUp = False
+            self.speedy = 0
+        if self.isMovingUp:
+            self.rect.y += self.speedy
+            self.speedy -= 4 # на какую скорость прыжок ускоряется
+                    
+         # Применяем падение
+        if Utils.IsOnSurface(self) == True:
+            self.isOnJump = False
+            
+
+        # Применяем управление
         keystate = pygame.key.get_pressed()
-
-        #Сделать движение влево-вправо
-        #Сделать прыжок более реалистичным(настроить скорость подьема и падения)
-        #Добавить папку resources и положить туда внешний вид спрайта
-
-
-<<<<<<< HEAD:Player.py
         if keystate[pygame.K_LEFT]:
             self.rect.x -= 8
         if keystate[pygame.K_RIGHT]:
-=======
-        if keystate[pygame.K_LEFT] and not pygame.sprite.spritecollide(self, Constants.all_props, False):
-            self.rect.x -= 8
-        if keystate[pygame.K_RIGHT] and not pygame.sprite.spritecollide(self, Constants.all_props, False):
->>>>>>> b59d44a3ffeb0d4d70902b175280b1e45b6fe2b8:Sprites/PlayerSprite.py
             self.rect.x += 8
-
+        if keystate[pygame.K_UP] and not self.isOnJump:
+            self.speedy = -1
+            self.jumpHeight = self.rect.y - 200
+            self.isMovingUp = True
+            self.isOnJump = True
+        
         if self.rect.right > Constants.WIDTH:
              self.rect.right = Constants.WIDTH
         if self.rect.left < 0:
             self.rect.left = 0
-
-
-        if keystate[pygame.K_UP] and not self.isOnJump and self.rect.bottom >= Constants.HEIGHT:
-            self.isOnJump = True
-
-        if self.isOnJump and self.jumpHeight <= self.rect.y:
-            self.rect.y -= 20 #скорость прыжка вверх
-            return
-        else:
-            self.isOnJump = False
-
-        if self.rect.bottom <= Constants.HEIGHT and not self.isOnJump:
-            self.rect.y += self.speedy #Скорость падения
-            self.speedy += 0.30 #Скорсоть падения постоянно увеличивается
-        else:
-            self.speedy = 0
-            self.rect.bottom = Constants.HEIGHT
-            self.isOnJump = False

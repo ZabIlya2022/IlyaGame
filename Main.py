@@ -18,7 +18,7 @@ box1 = BoxSprite(400, 550, 100)
 box2 = BoxSprite(70, 550, 60)
 player = Player()
 Constants.all_sprites.add(player)
-Constants.all_props.add(box1, box2)
+Constants.all_surface_sprites.add(box1, box2)
 # Цикл игры
 running = True
 while running:
@@ -32,11 +32,11 @@ while running:
 
     # Обновление
     Constants.all_sprites.update()
-    Constants.all_props.update
+    Constants.all_surface_sprites.update
     # Рендеринг
     screen.fill(Colours.BLACK)
     Constants.all_sprites.draw(screen)
-    Constants.all_props.draw(screen)
+    Constants.all_surface_sprites.draw(screen)
     # После отрисовки всего, переворачиваем экран
     pygame.display.flip()
 
