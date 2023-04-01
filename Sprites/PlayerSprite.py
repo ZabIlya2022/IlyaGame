@@ -25,9 +25,15 @@ class Player(pygame.sprite.Sprite):
         #Добавить папку resources и положить туда внешний вид спрайта
 
 
+<<<<<<< HEAD:Player.py
         if keystate[pygame.K_LEFT]:
             self.rect.x -= 8
         if keystate[pygame.K_RIGHT]:
+=======
+        if keystate[pygame.K_LEFT] and not pygame.sprite.spritecollide(self, Constants.all_props, False):
+            self.rect.x -= 8
+        if keystate[pygame.K_RIGHT] and not pygame.sprite.spritecollide(self, Constants.all_props, False):
+>>>>>>> b59d44a3ffeb0d4d70902b175280b1e45b6fe2b8:Sprites/PlayerSprite.py
             self.rect.x += 8
 
         if self.rect.right > Constants.WIDTH:
@@ -51,3 +57,4 @@ class Player(pygame.sprite.Sprite):
         else:
             self.speedy = 0
             self.rect.bottom = Constants.HEIGHT
+            self.isOnJump = False
