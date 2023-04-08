@@ -7,7 +7,6 @@ from Constants import Constants
 from Sprites.PlayerSprite import Player
 from Colours import Colours
 from Sprites.BoxSprite import BoxSprite
-
 # Создаем игру и окно
 pygame.init()
 pygame.mixer.init()
@@ -29,12 +28,13 @@ while running:
         # проверка для закрытия окна
         if event.type == pygame.QUIT:
             running = False
-
+    background = pygame.image.load("pngtree-magic-red-background-advertising-background-png-image_395568.jpg")
     # Обновление
     Constants.all_sprites.update()
     Constants.all_surface_sprites.update
     # Рендеринг
-    screen.fill(Colours.BLACK)
+    # screen.fill(Colours.BLACK)
+    screen.blit(background, (0, 0))
     Constants.all_sprites.draw(screen)
     Constants.all_surface_sprites.draw(screen)
     # После отрисовки всего, переворачиваем экран
