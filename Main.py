@@ -38,6 +38,10 @@ class Game:
                     y = row
                 if tile == '2':
                     Water(self, col, row)
+                if tile == '3':
+                    Box(self, col, row)
+                if tile == '4':
+                    Backgroung(self, col, row)
                 if tile == '.':
                     Backgroung(self, col, row)
         self.player = Player(self, x, y)

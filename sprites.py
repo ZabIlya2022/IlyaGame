@@ -97,8 +97,21 @@ class Backgroung(pg.sprite.Sprite):
         self.groups = game.all_sprites
         pg.sprite.Sprite.__init__(self, self.groups)
         self.game = game
-        self.image = pygame.Surface((64, 64))
-        self.image.fill(DARKGREY)
+        # self.image.fill(RED)
+        backgroung_image = pygame.image.load("фончик.png")
+        self.screen.blit(backgroung_image)
+        self.rect = self.image.get_rect()
+        self.x = x
+        self.y = y
+        self.rect.x = x * TILESIZE
+        self.rect.y = y * TILESIZE
+
+class Box(pg.sprite.Sprite):
+    def __init__(self, game, x, y):
+        self.groups = game.all_sprites
+        pg.sprite.Sprite.__init__(self, self.groups)
+        self.game = game
+        self.image = Utils.LoadImage("Brawl_Box.png", 64, 64)
         self.rect = self.image.get_rect()
         self.x = x
         self.y = y
