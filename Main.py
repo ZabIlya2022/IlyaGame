@@ -19,21 +19,28 @@ class Game:
 
     def load_data(self):
         game_folder = path.dirname(__file__)
-        self.map = Map(path.join(game_folder, 'map2.txt'))
+        self.map = Map(path.join(game_folder, 'map4.txt'))
 
     def new(self):
         # initialize all variables and do all the setup for a new game
         self.all_sprites = pg.sprite.Group()
         self.walls = pg.sprite.Group()
         self.waters = pg.sprite.Group()
+        x = 0
+        y = 0
         for row, tiles in enumerate(self.map.data):
             for col, tile in enumerate(tiles):
                 if tile == '1':
                     Wall(self, col, row)
                 if tile == 'P':
-                    self.player = Player(self, col, row)
+                    Backgroung(self, col, row)
+                    x = col
+                    y = row
                 if tile == '2':
                     Water(self, col, row)
+                if tile == '.':
+                    Backgroung(self, col, row)
+        self.player = Player(self, x, y)
         self.camera = Camera(self.map.width, self.map.height)
 
     def run(self):
